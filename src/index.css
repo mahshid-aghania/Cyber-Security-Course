@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+/* ---- Dark theme (default) ---- */
+html.dark {
+  --c-canvas: 7 13 25; /* #070D19 */
+  --c-surface: 13 23 40; /* #0D1728 */
+  --c-card: 18 32 53; /* #122035 */
+  --c-hairline: 42 58 86;
+  --c-ink: 244 247 252; /* #F4F7FC */
+  --c-muted: 155 174 199; /* #9BAEC7 */
+  color-scheme: dark;
+}
+
+/* ---- Light theme ---- */
+html.light {
+  --c-canvas: 244 247 252;
+  --c-surface: 255 255 255;
+  --c-card: 255 255 255;
+  --c-hairline: 221 229 240;
+  --c-ink: 15 27 46;
+  --c-muted: 86 103 130;
+  color-scheme: light;
+}
+
+* {
+  border-color: rgb(var(--c-hairline) / 0.6);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(var(--c-canvas));
+  color: rgb(var(--c-ink));
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth theme crossfade */
+html.theme-transition,
+html.theme-transition * {
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.3s ease, fill 0.3s ease, stroke 0.3s ease !important;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--c-hairline) / 0.9);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(87 216 237 / 0.5);
+  background-clip: padding-box;
+}
+
+/* Focus ring for accessibility */
+:where(a, button, [role='button'], input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #57d8ed;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@layer components {
+  .glass {
+    background-color: rgb(var(--c-card) / 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .card {
+    background-color: rgb(var(--c-card));
+    border: 1px solid rgb(var(--c-hairline) / 0.7);
+    border-radius: 1rem;
+  }
+  .hairline {
+    border-color: rgb(var(--c-hairline) / 0.7);
+  }
+  .accent-gradient-text {
+    background-image: linear-gradient(100deg, #57d8ed, #5fe0be 45%, #a78bfa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-colors;
+  }
+  .btn-primary {
+    @apply btn text-[#04121a];
+    background-image: linear-gradient(100deg, #57d8ed, #5fe0be);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.06);
+  }
+  .btn-ghost {
+    @apply btn border border-hairline text-ink hover:bg-surface;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-hairline bg-surface/60 px-2.5 py-1 text-xs font-medium text-muted;
+  }
+  .prose-reader p {
+    @apply text-[15px] leading-7 text-muted;
+  }
+  .prose-reader strong {
+    @apply text-ink font-semibold;
+  }
+}
+
+/* Respect reduced motion globally as a safety net */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* React Flow theming hooks */
+.react-flow__attribution {
+  display: none !important;
+}
